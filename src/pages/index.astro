@@ -13,39 +13,55 @@ const teamPreview = team.filter((m) => m.photo).slice(0, 6);
 <Layout
   title={`${site.name} - Physiotherapie & Osteopathie in München-Nymphenburg`}
   current="/"
-  heroPreload={{ srcset: '/images/hero.jpg 1600w', sizes: '(min-width: 1024px) 50vw, 92vw' }}>
+  heroPreload={{ srcset: '/images/hero-sm.jpg 960w, /images/hero.jpg 1800w', sizes: '100vw' }}>
 
-  <!-- ════════ HERO ════════ -->
-  <section class="bg-paper relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20">
-    <!-- Markenmotiv Morphofalter, sehr dezent -->
-    <img src="/images/schmetterling.png" alt="" aria-hidden="true"
-         class="pointer-events-none select-none absolute right-[44%] -top-6 w-40 opacity-[0.05] hidden lg:block" />
-    <div class="container-wide relative">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        <div class="lg:col-span-6 fade-in">
-          <div class="flex items-center gap-2.5 mb-6">
-            <span id="open-dot" class="dot dot-grey"></span>
-            <span id="open-status" class="text-[0.86rem] font-medium text-muted">Physiotherapie & Osteopathie · Nymphenburg</span>
-          </div>
-          <h1 class="display-1 text-balance">Ihre leistungsstarke Therapie in <em>Nymphenburg.</em></h1>
-          <p class="lead mt-7 max-w-xl text-pretty">
-            Physiotherapie, Osteopathie und Training - persönlich geführt von Hartmut Meyer,
-            seit 1990 in der Wotanstraße. Mit Zeit für jede Behandlung.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3 mt-9">
-            <a href="/kontakt" class="btn btn-blue btn-lg">Termin anfragen<Icon name="ArrowRight" size={17} strokeWidth={2.2} /></a>
-            <a href="/karriere" class="btn btn-outline btn-lg"><Icon name="Users" size={17} strokeWidth={2} />Im Team Meyer arbeiten</a>
-          </div>
-          <div class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
-            <span class="inline-flex items-center gap-2"><Icon name="Star" size={16} strokeWidth={2} class="text-blue-deep" /><span class="text-ink font-semibold">4,9</span> bei Google</span>
-            <span class="inline-flex items-center gap-2"><Icon name="Landmark" size={16} strokeWidth={2} class="text-blue-deep" />Seit 1990 am Ort</span>
-            <span class="inline-flex items-center gap-2"><Icon name="Dumbbell" size={16} strokeWidth={2} class="text-blue-deep" />Neu: KG am Gerät</span>
-          </div>
+  <!-- ════════ HERO (Vollbild-Hintergrund) ════════ -->
+  <section class="relative overflow-hidden on-dark min-h-[90vh] lg:min-h-[88vh] flex items-end">
+    <img src="/images/hero.jpg" srcset="/images/hero-sm.jpg 960w, /images/hero.jpg 1800w" sizes="100vw"
+         alt="Empfang der Physiotherapie Hartmut Meyer in München-Nymphenburg - das Team begrüßt eine Patientin"
+         width="1800" height="1100" fetchpriority="high"
+         class="absolute inset-0 w-full h-full object-cover" style="object-position: 62% center;" />
+    <!-- Overlay: links/unten dunkler fuer Lesbarkeit, rechts zeigt die Szene -->
+    <div class="absolute inset-0" style="background: linear-gradient(100deg, rgba(4,28,38,0.94) 0%, rgba(5,32,43,0.8) 32%, rgba(6,40,53,0.46) 62%, rgba(6,40,53,0.22) 100%);"></div>
+    <div class="absolute inset-x-0 bottom-0 h-44" style="background: linear-gradient(to top, rgba(4,26,35,0.8), transparent);"></div>
+    <div class="container-wide relative w-full pt-36 pb-14 md:pb-20 lg:pb-28">
+      <div class="max-w-2xl fade-in">
+        <div class="flex items-center gap-2.5 mb-6">
+          <span id="open-dot" class="dot dot-grey"></span>
+          <span id="open-status" class="text-[0.86rem] font-medium text-white/80">Physiotherapie & Osteopathie · Nymphenburg</span>
         </div>
-        <div class="lg:col-span-6 fade-in stagger-1">
-          <div class="photo-frame aspect-[5/4] md:aspect-[4/3]">
-            <img src="/images/hero.jpg" alt="Empfang der Physiotherapie Hartmut Meyer in München-Nymphenburg - das Team begrüßt eine Patientin" width="800" height="600" fetchpriority="high" />
-          </div>
+        <h1 class="display-1 text-white text-balance" style="text-shadow: 0 2px 36px rgba(4,26,35,0.55);">Ihre leistungsstarke Therapie in <em>Nymphenburg.</em></h1>
+        <p class="lead mt-7 max-w-xl text-white/85 text-pretty">
+          Physiotherapie, Osteopathie und Training - persönlich geführt von Hartmut Meyer,
+          seit 1990 in der Wotanstraße. Mit Zeit für jede Behandlung.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-9">
+          <a href="/kontakt" class="btn btn-light btn-lg">Termin anfragen<Icon name="ArrowRight" size={17} strokeWidth={2.2} /></a>
+          <a href="/karriere" class="btn btn-ghost btn-lg"><Icon name="Users" size={17} strokeWidth={2} />Im Team Meyer arbeiten</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust-Streifen (heller Bruch zwischen Hero-Bild und Karriere-Sektion) -->
+  <section class="bg-white border-b border-line">
+    <div class="container-wide">
+      <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-line">
+        <div class="flex items-center gap-3 px-1 lg:px-6 py-5 lg:py-6 fade-in">
+          <Icon name="Star" size={22} strokeWidth={1.7} class="text-blue-deep flex-shrink-0" />
+          <p class="text-[0.92rem] leading-tight"><span class="text-ink font-semibold">4,9</span><span class="text-muted"> bei Google</span></p>
+        </div>
+        <div class="flex items-center gap-3 px-1 lg:px-6 py-5 lg:py-6 fade-in stagger-1">
+          <Icon name="Landmark" size={22} strokeWidth={1.7} class="text-blue-deep flex-shrink-0" />
+          <p class="text-[0.92rem] leading-tight"><span class="text-ink font-semibold">Seit 1990</span><span class="text-muted"> am Ort</span></p>
+        </div>
+        <div class="flex items-center gap-3 px-1 lg:px-6 py-5 lg:py-6 fade-in stagger-2">
+          <Icon name="Timer" size={22} strokeWidth={1.7} class="text-blue-deep flex-shrink-0" />
+          <p class="text-[0.92rem] leading-tight"><span class="text-ink font-semibold">25–30 Min</span><span class="text-muted"> pro Behandlung</span></p>
+        </div>
+        <div class="flex items-center gap-3 px-1 lg:px-6 py-5 lg:py-6 fade-in stagger-3">
+          <Icon name="Dumbbell" size={22} strokeWidth={1.7} class="text-blue-deep flex-shrink-0" />
+          <p class="text-[0.92rem] leading-tight"><span class="text-ink font-semibold">Neu:</span><span class="text-muted"> KG am Gerät</span></p>
         </div>
       </div>
     </div>
