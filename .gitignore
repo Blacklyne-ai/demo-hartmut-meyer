@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+
+# docs/ enthält nur QA-Artefakte + Scrape-Doku; nur CONTENT-VERBATIM.md tracken
+docs/*
+!docs/CONTENT-VERBATIM.md

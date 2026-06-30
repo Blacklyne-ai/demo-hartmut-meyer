@@ -1,0 +1,181 @@
+---
+import { nav, site } from '../data/site';
+import Icon from './Icon.astro';
+const { current = '' } = Astro.props;
+// Desktop-Pille: Kontakt (= CTA) nicht doppelt als Textlink
+const navLinks = nav.filter((i) => i.href !== '/kontakt');
+
+const isActive = (item: (typeof nav)[number]) =>
+  current === item.href ||
+  (item.href.length > 1 && current.startsWith(item.href)) ||
+  (!!item.children && item.children.some((c) => c.href === current));
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50">
+  <!-- Recruiting-Bar (oben, prominent - Schwerpunkt Mitarbeitergewinnung) -->
+  <a href="/karriere" id="hiring-bar" class="group block text-white" style="background: rgb(var(--rgb-blue-deep));">
+    <div class="container-wide py-1.5 md:py-2 flex items-center justify-center gap-2.5 text-center">
+      <span class="dot dot-green flex-shrink-0"></span>
+      <span class="text-[0.78rem] md:text-[0.83rem] font-medium tracking-tight">
+        <span class="hidden sm:inline">Wir suchen Verstärkung - </span>im Team Meyer arbeiten
+      </span>
+      <Icon name="ArrowRight" size={14} strokeWidth={2.2} class="flex-shrink-0 transition-transform group-hover:translate-x-1" />
+    </div>
+  </a>
+  <div class="container-wide pt-2 md:pt-2.5">
+    <div
+      id="nav-pill"
+      class="flex items-center justify-between gap-4 rounded-pill pl-4 pr-2 md:pl-6 md:pr-3 h-14 md:h-[4.1rem] transition-all duration-300"
+      style="background: rgba(250,249,245,0.82); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); border: 1px solid rgba(228,223,214,0.85); box-shadow: 0 1px 2px rgba(30,35,45,0.04), 0 8px 28px -14px rgba(30,35,45,0.16);"
+    >
+      <!-- Brand: Original-Logo 1:1 -->
+      <a href="/" class="flex items-center flex-shrink-0" aria-label={`${site.name} - Startseite`}>
+        <img src="/logo.png" alt="Physiotherapie & Osteopathie Hartmut Meyer - München-Nymphenburg" width="220" height="38" class="h-8 md:h-10 w-auto" />
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-x-2.5 xl:gap-x-5" aria-label="Hauptnavigation">
+        {navLinks.map((item) =>
+          item.children ? (
+            <div class="nav-dd relative">
+              <a href={item.href} class={`nav-link inline-flex items-center gap-1 ${isActive(item) ? 'active' : ''}`} aria-haspopup="true" aria-expanded="false">
+                {item.label}
+                <Icon name="ChevronDown" size={14} strokeWidth={2.2} class="nav-dd-chev" />
+              </a>
+              <div class="nav-dd-panel" role="menu">
+                {item.children.map((c) => (
+                  <a href={c.href} role="menuitem" class={`nav-dd-item ${current === c.href ? 'active' : ''}`}>{c.label}</a>
+                ))}
+              </div>
+            </div>
+          ) : item.highlight ? (
+            <a href={item.href} aria-current={isActive(item) ? 'page' : undefined} class={`nav-jobs ${isActive(item) ? 'active' : ''}`}>
+              <Icon name="Users" size={15} strokeWidth={2} />{item.label}
+            </a>
+          ) : (
+            <a href={item.href} aria-current={isActive(item) ? 'page' : undefined} class={`nav-link ${isActive(item) ? 'active' : ''}`}>{item.label}</a>
+          )
+        )}
+      </nav>
+
+      <!-- Right cluster -->
+      <div class="flex items-center gap-2.5">
+        <a href={`tel:${site.phoneIntl}`} class="hidden xl:inline-flex items-center gap-2 text-ink/80 hover:text-blue-ink transition text-sm font-medium" aria-label={`Anrufen ${site.phoneDisplay}`}>
+          <Icon name="Phone" size={15} strokeWidth={2} class="text-blue-deep" />
+          <span>{site.phoneDisplay}</span>
+        </a>
+        <a href="/kontakt" class="btn btn-blue btn-sm hidden sm:inline-flex">Termin anfragen</a>
+
+        <button id="menu-toggle" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full transition" style="color:#08303F;" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu (Pille darunter) -->
+  <div id="mobile-menu" class="hidden lg:hidden container-wide mt-2">
+    <nav class="rounded-3xl p-4 flex flex-col max-h-[calc(100vh-6rem)] overflow-y-auto" style="background: rgba(250,249,245,0.98); backdrop-filter: blur(18px); border: 1px solid rgba(228,223,214,0.85); box-shadow: 0 24px 50px -22px rgba(30,35,45,0.28);" aria-label="Mobile Navigation">
+      {nav.map((item) => (
+        <Fragment>
+          <a href={item.href}
+            class="py-3 text-ink/90 hover:text-blue-ink border-b border-line/70 font-display text-lg inline-flex items-center gap-1.5"
+            style={current === item.href || item.highlight ? 'color:#023E59' : ''}>
+            {item.highlight && <Icon name="Users" size={17} strokeWidth={2} class="text-blue-deep" />}{item.label}
+          </a>
+          {item.children && (
+            <div class="flex flex-col pl-4 border-b border-line/70">
+              {item.children.map((c) => (
+                <a href={c.href} class="py-2.5 text-[0.95rem] text-muted hover:text-blue-ink transition">{c.label}</a>
+              ))}
+            </div>
+          )}
+        </Fragment>
+      ))}
+      <div class="grid grid-cols-2 gap-2.5 mt-5">
+        <a href={`tel:${site.phoneIntl}`} class="btn btn-outline btn-sm"><Icon name="Phone" size={15} strokeWidth={2.2} /> Anrufen</a>
+        <a href="/kontakt" class="btn btn-blue btn-sm">Termin anfragen</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 22px; height: 22px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #08303F; border-radius: 2px; transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55), opacity 0.25s ease; transform-origin: center; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Jobs/Karriere - dezent hervorgehoben (Recruiting-Schwerpunkt) */
+  .nav-jobs {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.42rem 0.85rem; border-radius: 999px;
+    font-size: 0.88rem; font-weight: 600; color: rgb(var(--rgb-blue-ink));
+    background: rgb(var(--rgb-blue) / 0.10); border: 1px solid rgb(var(--rgb-blue) / 0.22);
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+  }
+  .nav-jobs:hover, .nav-jobs.active { background: rgb(var(--rgb-blue-deep)); color: #fff; border-color: transparent; }
+
+  .nav-dd-panel {
+    position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(8px);
+    min-width: 270px; padding: 0.5rem; border-radius: 16px;
+    background: rgba(255,255,255,0.98); border: 1px solid rgb(228,223,214);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 20px 44px -16px rgba(30,35,45,0.24);
+    opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 60;
+  }
+  .nav-dd-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -18px; height: 20px; }
+  .nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .nav-dd:hover .nav-dd-chev { transform: rotate(180deg); }
+  .nav-dd-chev { transition: transform 0.3s ease; }
+  .nav-dd-item { display: block; padding: 0.62rem 0.85rem; border-radius: 10px; font-size: 0.92rem; font-weight: 500; color: rgba(23,37,64,0.78); transition: background 0.2s ease, color 0.2s ease; }
+  .nav-dd-item:hover { background: rgb(var(--rgb-blue) / 0.08); color: rgb(var(--rgb-blue-ink)); }
+  .nav-dd-item.active { color: rgb(var(--rgb-blue-ink)); background: rgb(var(--rgb-blue) / 0.06); font-weight: 600; }
+</style>
+
+<script>
+  function isOpen() { const m = document.getElementById('mobile-menu'); return !!m && !m.classList.contains('hidden'); }
+  function setOpen(open: boolean) {
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
+    const burger = toggle?.querySelector('.hamburger');
+    if (!menu) return;
+    menu.classList.toggle('hidden', !open);
+    burger?.classList.toggle('open', open);
+    toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle?.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    toggle?.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!isOpen()); });
+    menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.body.style.overflow = '';
+  });
+  const w = window as any;
+  if (!w.__havHeader) {
+    w.__havHeader = true;
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    document.addEventListener('click', (e) => { const h = document.getElementById('site-header'); if (isOpen() && h && !h.contains(e.target as Node)) setOpen(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 1024 && isOpen()) setOpen(false); });
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(() => {
+        const pill = document.getElementById('nav-pill');
+        if (pill) {
+          if (window.scrollY > 16) {
+            pill.style.background = 'rgba(255,255,255,0.92)';
+            pill.style.boxShadow = '0 1px 2px rgba(30,35,45,0.05), 0 14px 36px -16px rgba(30,35,45,0.3)';
+          } else {
+            pill.style.background = 'rgba(250,249,245,0.82)';
+            pill.style.boxShadow = '0 1px 2px rgba(30,35,45,0.04), 0 8px 28px -14px rgba(30,35,45,0.16)';
+          }
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+</script>

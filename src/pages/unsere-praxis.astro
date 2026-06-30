@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ReviewBadge from '../components/ReviewBadge.astro';
+import { site } from '../data/site';
+import { praxis } from '../data/content';
+---
+<Layout
+  title={`Über uns - ${site.shortName} | Die Praxis in München-Nymphenburg`}
+  description="Seit 1990 in der Wotanstraße: die Geschichte der Praxis Hartmut Meyer in München-Nymphenburg. 2021/2022 renoviert, seit 2025 geleitet von Dario Meyer."
+  current="/unsere-praxis">
+
+  <PageHero
+    eyebrow="Über uns"
+    crumb="Über uns"
+    title="Seit 1990 in <em>Nymphenburg.</em>"
+    subtitle={praxis.lead}
+    image="/images/super1.jpg"
+    imageAlt="Empfang der Praxis Hartmut Meyer"
+  />
+
+  <!-- Geschichte -->
+  <section class="bg-white sec border-b border-line">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-7 fade-in">
+          <div class="space-y-5 text-[1.05rem] leading-relaxed">
+            {praxis.paras.map((p) => <p class="text-pretty">{p}</p>)}
+          </div>
+          <p class="mt-8 font-display text-ink text-xl">{praxis.closing}</p>
+          <p class="mt-1.5 text-muted-light">{site.owner} & {site.leadName}</p>
+        </div>
+        <aside class="lg:col-span-5 fade-in stagger-1">
+          <div class="panel p-7">
+            <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-blue-deep mb-5">Auf einen Blick</h3>
+            <dl class="space-y-4">
+              {praxis.facts.map((f) => (
+                <div class="flex items-start gap-3.5 pb-4 border-b border-line last:border-0 last:pb-0">
+                  <Icon name="CircleCheck" size={19} strokeWidth={2} class="text-blue-deep flex-shrink-0 mt-0.5" />
+                  <div>
+                    <dt class="text-muted-light text-[0.82rem]">{f.k}</dt>
+                    <dd class="text-ink font-medium">{f.v}</dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Räume Einblick -->
+  <section class="bg-paper sec border-b border-line">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 fade-in">
+        <div class="max-w-2xl">
+          <span class="eyebrow mb-5">Unsere Räume</span>
+          <h2 class="h-xl text-balance">2021/2022 renoviert und neu ausgestattet</h2>
+        </div>
+        <a href="/galerie-therapieraeume" class="btn btn-outline self-start md:self-auto flex-shrink-0">Galerie Räume<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></a>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+        <img src="/images/raum-2.jpg" alt="Therapieraum" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in" />
+        <img src="/images/raum-4.jpg" alt="Behandlungsraum" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-1" />
+        <img src="/images/training-raum.jpg" alt="Trainingsraum" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-2" />
+        <img src="/images/raum-5.jpg" alt="Therapieraum für Osteopathie" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Reputation -->
+  <section class="bg-white sec">
+    <div class="container-px text-center">
+      <div class="max-w-2xl mx-auto fade-in">
+        <div class="flex justify-center mb-6"><span class="eyebrow eyebrow-plain">Reputation</span></div>
+        <ReviewBadge align="center" />
+        <p class="lead mt-7 text-pretty">Eine sehr gute Bewertung - und die Verpflichtung, ihr jeden Tag gerecht zu werden.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

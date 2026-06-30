@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { training, galerieTraining } from '../data/content';
+---
+<Layout
+  title={`Training & KGG - ${site.shortName} | Krankengymnastik am Gerät in Nymphenburg`}
+  description="Krankengymnastik am Gerät (KGG) und Training bei Physiotherapie Hartmut Meyer - Gym80 und Technogym in München-Nymphenburg. Plus zwei Übungen für eine aufrechte Haltung."
+  current="/training">
+
+  <PageHero
+    eyebrow="Training & KGG"
+    crumb="Training"
+    title="Training, das die <em>Therapie</em> weiterträgt."
+    subtitle={training.lead}
+    image="/images/7474.jpg"
+    imageAlt="Patient beim Training am Gerät"
+    primary={{ href: '/kontakt', label: 'Termin anfragen' }}
+  />
+
+  <!-- KGG -->
+  <section class="bg-white sec border-b border-line">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in">
+          <span class="pill pill-blue mb-5"><Icon name="Sparkles" size={14} strokeWidth={2} />Neu: Krankengymnastik am Gerät</span>
+          <h2 class="display-2 text-balance mb-6">Krankengymnastik am Gerät</h2>
+          <p class="lead text-pretty mb-5">{training.kgg}</p>
+          <p class="text-[1.02rem] leading-relaxed text-pretty text-muted">
+            Seit Herbst 2022 trainieren Sie bei uns an Geräten von Gym80 und Technogym -
+            Beinpresse, Seilzüge, Sprossenwand, Laufband und Ergometer. Immer unter
+            therapeutischer Aufsicht.
+          </p>
+        </div>
+        <div class="lg:col-span-6 fade-in stagger-1">
+          <div class="photo-frame aspect-[4/3]">
+            <img src="/images/training-beinpresse.jpg" alt="Beinpresse im Trainingsbereich" width="640" height="480" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zwei Übungen -->
+  <section class="bg-cream sec border-b border-line">
+    <div class="container-px">
+      <div class="max-w-2xl mb-12 fade-in">
+        <span class="eyebrow mb-5">Zum Mitmachen</span>
+        <h2 class="display-2 text-balance">Zwei Übungen für eine aufrechte Haltung</h2>
+        <p class="lead mt-5 text-pretty">Einfach, wirksam und überall umsetzbar - so, wie wir sie auch in der Praxis zeigen.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {training.exercises.map((ex, i) => (
+          <div class={`card fade-in stagger-${i + 1}`}>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="icon-chip"><Icon name="Dumbbell" size={20} strokeWidth={1.8} /></span>
+              <h3 class="h-md">{ex.name}</h3>
+            </div>
+            <p class="text-[0.97rem] text-muted leading-relaxed text-pretty">{ex.desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-muted-light text-sm mt-7 inline-flex items-center gap-2 fade-in">
+        <Icon name="Info" size={16} strokeWidth={2} class="text-blue-deep" />{training.note}
+      </p>
+    </div>
+  </section>
+
+  <!-- Trainingsbereich Galerie -->
+  <section class="bg-white sec">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 fade-in">
+        <div class="max-w-2xl">
+          <span class="eyebrow mb-5">Der Trainingsbereich</span>
+          <h2 class="h-xl text-balance">Gym80, Technogym & mehr</h2>
+        </div>
+        <a href="/galerie-training" class="btn btn-outline self-start md:self-auto flex-shrink-0">Ganze Galerie<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></a>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+        {galerieTraining.images.slice(0, 4).map((img, i) => (
+          <img src={img.src} alt={img.alt} width="360" height="480" loading="lazy" class={`rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-${(i % 4) + 1}`} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Lust auf Training bei uns?" text="Krankengymnastik am Gerät wird ärztlich verordnet - sprechen Sie uns an, wir beraten Sie gern." />
+</Layout>

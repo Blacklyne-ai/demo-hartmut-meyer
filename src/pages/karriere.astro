@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import JobCard from '../components/JobCard.astro';
+import ReviewBadge from '../components/ReviewBadge.astro';
+import { site, telLink, initiativMail } from '../data/site';
+import { karriere } from '../data/content';
+---
+<Layout
+  title={`Karriere - ${site.shortName} | Physiotherapeut:in in München-Nymphenburg`}
+  description="Arbeiten bei Physiotherapie Hartmut Meyer in München-Nymphenburg: gepflegte Praxis, moderne Räume, KGG, geregelte Sprechzeiten, geförderte Fortbildungen. Jetzt bewerben oder initiativ."
+  current="/karriere">
+
+  <PageHero
+    eyebrow="Karriere bei Hartmut Meyer"
+    crumb="Karriere"
+    title="Arbeiten in Nymphenburg - im <em>Team Meyer.</em>"
+    subtitle={karriere.lead}
+    primary={{ href: '#stellen', label: 'Offene Stellen' }}
+    secondary={{ href: initiativMail, label: 'Initiativ bewerben' }}
+  />
+
+  <!-- ════════ WIR BIETEN (belegt) ════════ -->
+  <section class="bg-white sec border-b border-line">
+    <div class="container-px">
+      <div class="max-w-2xl mb-12 fade-in">
+        <span class="eyebrow mb-5">Wir bieten</span>
+        <h2 class="display-2 text-balance">Warum es sich lohnt, hier zu arbeiten</h2>
+        <p class="lead mt-5 text-pretty">Keine Versprechen ins Blaue - das sind die Punkte, die unser Team heute schon schätzt.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {karriere.benefits.map((b, i) => (
+          <div class={`card flex flex-col fade-in stagger-${(i % 3) + 1}`}>
+            <span class="icon-chip mb-5"><Icon name={b.icon} size={22} strokeWidth={1.8} /></span>
+            <h3 class="h-md mb-2">{b.title}</h3>
+            <p class="text-[0.94rem] text-muted leading-relaxed flex-1">{b.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SO ARBEITEN WIR HIER (Employer Branding) ════════ -->
+  <section class="bg-cream sec border-b border-line">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in">
+          <div class="grid grid-cols-2 gap-3.5">
+            <img src="/images/raum-1.jpg" alt="Heller Therapieraum in Nymphenburg" width="340" height="440" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft" />
+            <div class="grid gap-3.5">
+              <img src="/images/training-seilzuege.jpg" alt="Trainingsbereich mit Seilzügen" width="340" height="210" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[16/11] shadow-soft" />
+              <img src="/images/team-gruppe.jpg" alt="Das Team Meyer" width="340" height="210" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[16/11] shadow-soft" />
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-6 fade-in stagger-1">
+          <span class="eyebrow mb-5">So arbeiten wir hier</span>
+          <h2 class="display-2 text-balance mb-8">Eine Praxis, in der man bleiben mag</h2>
+          <div class="space-y-5">
+            {karriere.reasons.map((r) => (
+              <div class="flex items-start gap-4">
+                <span class="icon-chip !w-11 !h-11 flex-shrink-0"><Icon name={r.icon} size={20} strokeWidth={1.9} /></span>
+                <div>
+                  <p class="text-ink font-medium text-[1.02rem] leading-snug">{r.title}</p>
+                  <p class="text-muted text-[0.94rem] mt-1 leading-relaxed text-pretty">{r.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ OFFENE STELLEN ════════ -->
+  <section class="bg-white sec border-b border-line" id="stellen">
+    <div class="container-px">
+      <div class="max-w-2xl mb-12 fade-in">
+        <span class="eyebrow mb-5">Offene Stellen</span>
+        <h2 class="display-2 text-balance">Aktuell gesucht</h2>
+        <p class="lead mt-5 text-pretty">Wir vergrößern unser Team. Passt keine Stelle exakt? Bewerben Sie sich initiativ - wir finden gemeinsam den richtigen Platz.</p>
+      </div>
+      <div class="grid gap-6 max-w-4xl">
+        {karriere.jobs.map((job) => <div class="fade-in"><JobCard job={job} /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ BEWERBUNG ════════ -->
+  <section class="bg-cream sec">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-7 fade-in">
+          <span class="eyebrow mb-5">So bewerben Sie sich</span>
+          <h2 class="display-2 text-balance mb-7">Formlos genügt</h2>
+          <p class="text-[1.05rem] leading-relaxed text-pretty mb-5">{karriere.apply.note}</p>
+          <p class="text-[1.05rem] leading-relaxed text-pretty mb-8 text-muted">{karriere.apply.initiativ}</p>
+          <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+            <a href={initiativMail} class="btn btn-blue btn-lg"><Icon name="Send" size={17} strokeWidth={2} />Bewerbung schreiben</a>
+            <a href={telLink} class="btn btn-outline btn-lg"><Icon name="Phone" size={17} strokeWidth={2} />{site.phoneDisplay}</a>
+          </div>
+          <p class="text-sm text-muted-light mt-7 inline-flex items-start gap-2.5 max-w-lg">
+            <Icon name="ShieldCheck" size={16} strokeWidth={2} class="text-blue-deep flex-shrink-0 mt-0.5" />
+            {karriere.apply.privacy}
+          </p>
+        </div>
+        <div class="lg:col-span-5 fade-in stagger-1">
+          <div class="card">
+            <h3 class="h-md mb-5">Ein Wort von uns</h3>
+            <p class="text-muted leading-relaxed text-pretty mb-6">
+              Bei uns zählt nicht der schnellste Durchlauf, sondern gute Therapie mit Zeit.
+              Wenn Sie so arbeiten möchten, passen wir wahrscheinlich gut zusammen.
+            </p>
+            <ReviewBadge />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

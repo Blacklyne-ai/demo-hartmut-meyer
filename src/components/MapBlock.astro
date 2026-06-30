@@ -1,0 +1,56 @@
+---
+// Google Maps wird DSGVO-konform erst nach Einwilligung geladen (Gesundheitsdaten
+// = sensibel). Bis dahin Platzhalter mit „Karte laden"-Button. Einwilligung wird
+// in localStorage (meyer-cookie-notice) geteilt mit dem CookieBanner.
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div class={`map-block photo-frame photo-frame-soft relative ${className}`} style="background: rgb(var(--rgb-sand));" data-embed={site.mapsEmbed}>
+  <!-- Platzhalter (Default, ohne Einwilligung) -->
+  <div class="map-placeholder absolute inset-0 flex flex-col items-center justify-center text-center gap-4 p-6">
+    <span class="icon-chip"><Icon name="MapPin" size={22} strokeWidth={1.8} /></span>
+    <div>
+      <p class="text-ink font-medium">{site.street}, {site.postcode} {site.city}</p>
+      <p class="text-muted-light text-sm mt-1 max-w-xs mx-auto">Die Karte wird erst nach Ihrer Einwilligung von Google geladen.</p>
+    </div>
+    <button type="button" class="map-consent btn btn-blue btn-sm"><Icon name="Map" size={15} strokeWidth={2} /> Karte laden</button>
+    <a href={site.mapsUrl} target="_blank" rel="noopener" class="arrow-link text-[0.86rem]">Stattdessen in Google Maps öffnen<Icon name="ArrowUpRight" size={14} strokeWidth={2.2} /></a>
+  </div>
+  <a href={site.mapsUrl} target="_blank" rel="noopener" class="map-route absolute bottom-4 left-4 btn btn-light btn-sm shadow-lg z-10 hidden">
+    <Icon name="Navigation" size={14} strokeWidth={2.2} /> Route berechnen
+  </a>
+</div>
+
+<script>
+  const KEY = 'meyer-cookie-notice';
+  function loadMap(el: Element) {
+    if (el.querySelector('iframe')) return;
+    const src = (el as HTMLElement).dataset.embed;
+    if (!src) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.title = 'Karte - Physiotherapie Hartmut Meyer, Wotanstraße 37-39, 80639 München';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.style.cssText = 'width:100%;height:100%;min-height:340px;border:0;display:block;';
+    el.prepend(iframe);
+    el.querySelector('.map-placeholder')?.classList.add('hidden');
+    el.querySelector('.map-route')?.classList.remove('hidden');
+  }
+  function consented() { try { return localStorage.getItem(KEY) === 'ok'; } catch { return false; } }
+  function initMaps() {
+    document.querySelectorAll('.map-block').forEach((el) => {
+      if (consented()) { loadMap(el); return; }
+      el.querySelector('.map-consent')?.addEventListener('click', () => {
+        try { localStorage.setItem(KEY, 'ok'); } catch {}
+        window.dispatchEvent(new CustomEvent('meyer-consent'));
+        loadMap(el);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initMaps);
+  // Wenn der CookieBanner zustimmt, Karten ebenfalls laden
+  window.addEventListener('meyer-consent', () => document.querySelectorAll('.map-block').forEach(loadMap));
+</script>

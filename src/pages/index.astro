@@ -1,0 +1,313 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import MapBlock from '../components/MapBlock.astro';
+import ReviewBadge from '../components/ReviewBadge.astro';
+import { site, openings, team, telLink, initiativMail } from '../data/site';
+import { willkommen, pillars, karriere, training } from '../data/content';
+
+// Team-Vorschau: die Behandelnden mit Foto, max. 6 fuer eine saubere Reihe
+const teamPreview = team.filter((m) => m.photo).slice(0, 6);
+---
+<Layout
+  title={`${site.name} - Physiotherapie & Osteopathie in München-Nymphenburg`}
+  current="/"
+  heroPreload={{ srcset: '/images/super3.jpg 1400w', sizes: '(min-width: 1024px) 50vw, 92vw' }}>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="bg-paper relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20">
+    <!-- Markenmotiv Morphofalter, sehr dezent -->
+    <img src="/images/schmetterling.png" alt="" aria-hidden="true"
+         class="pointer-events-none select-none absolute right-[44%] -top-6 w-40 opacity-[0.05] hidden lg:block" />
+    <div class="container-wide relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in">
+          <div class="flex items-center gap-2.5 mb-6">
+            <span id="open-dot" class="dot dot-grey"></span>
+            <span id="open-status" class="text-[0.86rem] font-medium text-muted">Physiotherapie & Osteopathie · Nymphenburg</span>
+          </div>
+          <h1 class="display-1 text-balance">Ihre leistungsstarke Therapie in <em>Nymphenburg.</em></h1>
+          <p class="lead mt-7 max-w-xl text-pretty">
+            Physiotherapie, Osteopathie und Training - persönlich geführt von Hartmut Meyer,
+            seit 1990 in der Wotanstraße. Mit Zeit für jede Behandlung.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 mt-9">
+            <a href="/kontakt" class="btn btn-blue btn-lg">Termin anfragen<Icon name="ArrowRight" size={17} strokeWidth={2.2} /></a>
+            <a href="/karriere" class="btn btn-outline btn-lg"><Icon name="Users" size={17} strokeWidth={2} />Im Team Meyer arbeiten</a>
+          </div>
+          <div class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
+            <span class="inline-flex items-center gap-2"><Icon name="Star" size={16} strokeWidth={2} class="text-blue-deep" /><span class="text-ink font-semibold">4,9</span> bei Google</span>
+            <span class="inline-flex items-center gap-2"><Icon name="Landmark" size={16} strokeWidth={2} class="text-blue-deep" />Seit 1990 am Ort</span>
+            <span class="inline-flex items-center gap-2"><Icon name="Dumbbell" size={16} strokeWidth={2} class="text-blue-deep" />Neu: KG am Gerät</span>
+          </div>
+        </div>
+        <div class="lg:col-span-6 fade-in stagger-1">
+          <div class="photo-frame aspect-[5/4] md:aspect-[4/3]">
+            <img src="/images/super3.jpg" alt="Therapeut behandelt einen Patienten in der Praxis Hartmut Meyer in Nymphenburg" width="800" height="600" fetchpriority="high" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ KARRIERE - Schwerpunkt, weit oben ════════ -->
+  <section class="section-dark on-dark sec relative overflow-hidden" id="karriere">
+    <img src="/images/schmetterling.png" alt="" aria-hidden="true"
+         class="pointer-events-none select-none absolute -left-12 bottom-0 w-72 opacity-[0.06] -rotate-12" />
+    <div class="container-px relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in">
+          <span class="eyebrow eyebrow-light mb-5">Wir suchen Verstärkung</span>
+          <h2 class="display-2 text-white text-balance mb-6">Arbeiten in Nymphenburg - im <em>Team Meyer.</em></h2>
+          <p class="text-lg text-white/75 leading-relaxed mb-8 text-pretty">{karriere.lead}</p>
+          <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4 mb-9">
+            {karriere.benefits.map((b) => (
+              <div class="flex items-start gap-3">
+                <span class="icon-chip icon-chip-dark !w-9 !h-9 flex-shrink-0"><Icon name={b.icon} size={17} strokeWidth={1.9} /></span>
+                <p class="text-white/90 text-[0.95rem] font-medium leading-snug pt-1.5">{b.title}</p>
+              </div>
+            ))}
+          </div>
+          <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+            <a href="/karriere" class="btn btn-light btn-lg">Stellen & Bewerbung<Icon name="ArrowRight" size={17} strokeWidth={2.2} /></a>
+            <a href={initiativMail} class="btn btn-ghost btn-lg"><Icon name="Send" size={17} strokeWidth={2} />Initiativ bewerben</a>
+          </div>
+        </div>
+        <div class="lg:col-span-6 fade-in stagger-1">
+          <div class="photo-frame aspect-[4/3]">
+            <img src="/images/team-gruppe.jpg" alt="Das Team der Physiotherapie Hartmut Meyer" width="720" height="540" loading="lazy" />
+          </div>
+          <p class="text-white/55 text-sm mt-4 text-pretty">
+            Ein großes, gemischtes Team aus ganz Europa und darüber hinaus - mit geregelten
+            Sprechzeiten und geförderten Fortbildungen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WILLKOMMEN / HARTMUT MEYER (Vertrauen) ════════ -->
+  <section class="bg-white sec border-b border-line" id="willkommen">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-5 fade-in">
+          <div class="photo-frame aspect-[4/5] max-w-sm">
+            <img src="/images/team-hartmut.jpg" alt="Hartmut Meyer, Physiotherapeut und Gründer der Praxis" width="440" height="550" loading="lazy" />
+          </div>
+        </div>
+        <div class="lg:col-span-7 fade-in stagger-1">
+          <span class="eyebrow mb-6">Herzlich willkommen</span>
+          <blockquote class="pullquote-lg mb-8 text-balance">„{willkommen.claim}"</blockquote>
+          <div class="space-y-5 text-[1.02rem] leading-relaxed">
+            {willkommen.paras.map((p) => <p>{p}</p>)}
+            <p class="text-pretty text-muted">{willkommen.sub}</p>
+          </div>
+          <p class="mt-8 font-display text-ink text-lg">{site.owner}<span class="text-muted-light text-base font-sans"> · {site.ownerRole}</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ THERAPIE - 4 Säulen (symmetrisch) ════════ -->
+  <section class="bg-paper sec border-b border-line" id="therapie">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-14 fade-in">
+        <div class="max-w-2xl">
+          <span class="eyebrow mb-5">Was wir behandeln</span>
+          <h2 class="display-2 text-balance">Therapie, die zu Ihnen passt</h2>
+          <p class="lead mt-5 text-pretty">
+            Von der Krankengymnastik bis zur Osteopathie - abgestimmt auf Ihre Verordnung,
+            mit mindestens 25 bis 30 Minuten Zeit pro Behandlung.
+          </p>
+        </div>
+        <a href="/therapie" class="btn btn-outline self-start md:self-auto flex-shrink-0">Alle Leistungen<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {pillars.map((p, i) => (
+          <a href={p.href} class={`card card-hover group flex flex-col fade-in stagger-${(i % 4) + 1}`}>
+            <span class="icon-chip mb-5"><Icon name={p.icon} size={22} strokeWidth={1.8} /></span>
+            <h3 class="h-md mb-2.5">{p.name}</h3>
+            <p class="text-[0.94rem] text-muted leading-relaxed flex-1">{p.desc}</p>
+            <span class="arrow-link mt-5 text-[0.9rem]">Mehr erfahren<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TRAINING / KGG (Differenzierer) ════════ -->
+  <section class="bg-cream sec border-b border-line" id="training">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in order-2 lg:order-1">
+          <div class="grid grid-cols-2 gap-3.5">
+            <img src="/images/training-beinpresse.jpg" alt="Beinpresse im Trainingsbereich" width="340" height="440" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft" />
+            <div class="grid gap-3.5">
+              <img src="/images/training-seilzuege.jpg" alt="Seilzüge im Trainingsbereich" width="340" height="210" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[16/11] shadow-soft" />
+              <img src="/images/training-raum.jpg" alt="Trainingsraum der Praxis" width="340" height="210" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[16/11] shadow-soft" />
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-6 fade-in stagger-1 order-1 lg:order-2">
+          <span class="pill pill-blue mb-5"><Icon name="Sparkles" size={14} strokeWidth={2} />Neu: Krankengymnastik am Gerät</span>
+          <h2 class="display-2 text-balance mb-6">Training, das die <em>Therapie</em> weiterträgt.</h2>
+          <p class="lead text-pretty mb-5">{training.kgg}</p>
+          <p class="text-[1.02rem] leading-relaxed text-pretty text-muted mb-8">
+            Seit Herbst 2022 trainieren Sie bei uns an Geräten von Gym80 und Technogym - Beinpresse,
+            Seilzüge, Sprossenwand, Laufband und Ergometer.
+          </p>
+          <a href="/training" class="btn btn-blue">Zum Trainingsbereich<Icon name="ArrowRight" size={16} strokeWidth={2.2} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ EINBLICKE / GALERIE ════════ -->
+  <section class="bg-white sec border-b border-line" id="einblicke">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 fade-in">
+        <div class="max-w-2xl">
+          <span class="eyebrow mb-5">Einblicke</span>
+          <h2 class="h-xl text-balance">5 individuelle Räume, ein eigener Trainingsbereich</h2>
+          <p class="lead mt-5 text-pretty">2021/2022 renoviert und neu ausgestattet - mitten in Nymphenburg.</p>
+        </div>
+        <div class="flex gap-3 flex-shrink-0">
+          <a href="/galerie-therapieraeume" class="btn btn-outline btn-sm">Räume</a>
+          <a href="/galerie-training" class="btn btn-outline btn-sm">Training</a>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+        <img src="/images/raum-1.jpg" alt="Heller Therapieraum" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in" />
+        <img src="/images/raum-3.jpg" alt="Behandlungsraum" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-1" />
+        <img src="/images/training-ergometer.jpg" alt="Fahrrad-Ergometer im Trainingsbereich" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-2" />
+        <img src="/images/raum-5.jpg" alt="Therapieraum für Osteopathie und Manuelle Therapie" width="360" height="480" loading="lazy" class="rounded-2xl w-full h-full object-cover aspect-[3/4] shadow-soft fade-in stagger-3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TEAM (Anker - Vertrauen & Arbeitsumfeld) ════════ -->
+  <section class="bg-paper sec border-b border-line" id="team">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 fade-in">
+        <div class="max-w-2xl">
+          <span class="eyebrow mb-5">Wir sind Ihr Team</span>
+          <h2 class="h-xl text-balance">Menschen, die sich Zeit nehmen</h2>
+          <p class="lead mt-5 text-pretty">Rund um Hartmut Meyer und Praxisleitung Dario Meyer - vom Empfang bis zur Behandlung.</p>
+        </div>
+        <a href="/team" class="btn btn-outline self-start md:self-auto flex-shrink-0">Das ganze Team<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></a>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-6 gap-4">
+        {teamPreview.map((m, i) => (
+          <div class={`card-flush flex flex-col fade-in stagger-${(i % 4) + 1}`}>
+            <div class="aspect-[4/5] overflow-hidden bg-sand">
+              <img src={m.photo} alt={m.name} width="240" height="300" loading="lazy" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-3.5">
+              <p class="font-display text-ink text-[1.05rem] leading-tight">{m.name}</p>
+              <p class="text-muted-light text-[0.8rem] mt-0.5 leading-snug">{m.role}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ REPUTATION ════════ -->
+  <section class="bg-white sec border-b border-line" id="reputation">
+    <div class="container-px">
+      <div class="max-w-3xl mx-auto text-center fade-in">
+        <div class="flex justify-center mb-6"><span class="eyebrow eyebrow-plain">Was Patient:innen sagen</span></div>
+        <ReviewBadge align="center" />
+        <p class="lead mt-7 text-pretty">
+          Eine sehr gute Bewertung, auf die unser ganzes Team gemeinsam einzahlt - vom ersten
+          Anruf bis zur letzten Behandlung. Lesen Sie die Stimmen direkt bei Google.
+        </p>
+        <a href={site.reviewsUrl} target="_blank" rel="noopener" class="btn btn-outline mt-8">
+          Bewertungen auf Google lesen<Icon name="ArrowUpRight" size={16} strokeWidth={2.2} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SPRECHZEITEN + KONTAKT + ANFAHRT ════════ -->
+  <section class="bg-paper sec" id="kontakt">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-5 fade-in">
+          <span class="eyebrow mb-5">Sprechzeiten & Kontakt</span>
+          <h2 class="display-2 text-balance mb-7">So erreichen Sie uns</h2>
+
+          <div class="card mb-5">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="Clock" size={20} strokeWidth={2} class="text-blue-deep" />
+              <h3 class="h-md">Sprechzeiten</h3>
+            </div>
+            <dl class="space-y-2.5">
+              {openings.map((o) => (
+                <div class="flex items-baseline justify-between gap-4 text-[0.97rem]">
+                  <dt class="text-muted">{o.day}</dt>
+                  <dd class="text-ink font-medium text-right">{o.hours}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="text-muted-light text-sm mt-4 pt-4 border-t border-line">Termine nach Vereinbarung. Wir nehmen uns Zeit - mindestens 25 bis 30 Minuten pro Behandlung.</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3.5">
+            <a href={telLink} class="card card-hover flex items-center gap-3.5">
+              <span class="icon-chip flex-shrink-0"><Icon name="Phone" size={20} strokeWidth={1.9} /></span>
+              <span><span class="block text-muted-light text-xs">Anrufen</span><span class="text-ink font-medium">{site.phoneDisplay}</span></span>
+            </a>
+            <a href={`mailto:${site.email}`} class="card card-hover flex items-center gap-3.5">
+              <span class="icon-chip flex-shrink-0"><Icon name="Mail" size={20} strokeWidth={1.9} /></span>
+              <span><span class="block text-muted-light text-xs">E-Mail</span><span class="text-ink font-medium text-[0.9rem] break-all">{site.email}</span></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 fade-in stagger-1">
+          <MapBlock class="aspect-[4/3] lg:aspect-[16/11]" />
+          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
+            <span class="inline-flex items-center gap-2"><Icon name="MapPin" size={16} strokeWidth={2} class="text-blue-deep" />{site.street}, {site.postcode} {site.city}</span>
+            <span class="inline-flex items-center gap-2"><Icon name="Navigation" size={16} strokeWidth={2} class="text-blue-deep" />Nymphenburg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+
+  <!-- Live „geöffnet"-Status (Client) - Mo-Do 8-19, Fr 8-13 -->
+  <script>
+    const RANGES: Record<number, [number, number][]> = {
+      1: [[480,1140]], 2: [[480,1140]], 3: [[480,1140]], 4: [[480,1140]], 5: [[480,780]],
+    };
+    function fmt(min: number) { const h = Math.floor(min/60), m = min%60; return `${h}:${String(m).padStart(2,'0')}`; }
+    function updateStatus() {
+      const dot = document.getElementById('open-dot');
+      const label = document.getElementById('open-status');
+      if (!dot || !label) return;
+      const now = new Date();
+      const day = now.getDay();
+      const mins = now.getHours()*60 + now.getMinutes();
+      const today = RANGES[day] || [];
+      let open = false, closesAt = 0, opensNext = 0;
+      for (const [s,e] of today) { if (mins >= s && mins < e) { open = true; closesAt = e; } if (mins < s && !opensNext) opensNext = s; }
+      dot.className = 'dot';
+      if (open) {
+        const soon = closesAt - mins <= 45;
+        dot.classList.add(soon ? 'dot-amber' : 'dot-green');
+        label.textContent = soon ? `Schließt bald · ${fmt(closesAt)} Uhr` : `Jetzt geöffnet · bis ${fmt(closesAt)} Uhr`;
+      } else if (opensNext) {
+        dot.classList.add('dot-grey');
+        label.textContent = `Geschlossen · öffnet heute ${fmt(opensNext)} Uhr`;
+      } else {
+        dot.classList.add('dot-grey');
+        label.textContent = 'Termine nach Vereinbarung';
+      }
+    }
+    document.addEventListener('astro:page-load', updateStatus);
+  </script>
+</Layout>

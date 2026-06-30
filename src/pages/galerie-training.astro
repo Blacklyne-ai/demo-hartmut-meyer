@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { galerieTraining } from '../data/content';
+---
+<Layout
+  title={`Galerie Trainingsbereich - ${site.shortName} | München-Nymphenburg`}
+  description="Der Trainingsbereich der Praxis Hartmut Meyer in München-Nymphenburg - mit Geräten von Gym80 und Technogym für die Krankengymnastik am Gerät (KGG)."
+  current="/galerie-training">
+
+  <PageHero
+    eyebrow="Galerie Training"
+    crumb="Galerie Training"
+    title="Trainingsraum. Übungen. <em>Mitmachen.</em>"
+    subtitle={galerieTraining.lead}
+    secondary={{ href: '/galerie-therapieraeume', label: 'Zur Galerie Räume' }}
+  />
+
+  <section class="bg-paper sec">
+    <div class="container-px">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [&>*]:mb-4">
+        {galerieTraining.images.map((img, i) => (
+          <div class={`photo-frame-soft overflow-hidden fade-in stagger-${(i % 4) + 1}`} style="border-radius: var(--radius-lg);">
+            <img src={img.src} alt={img.alt} loading="lazy" class="w-full h-auto" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Lust auf Training bei uns?" text="Krankengymnastik am Gerät wird ärztlich verordnet - sprechen Sie uns an." />
+</Layout>

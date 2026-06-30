@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { therapieIntro, modalities, pillars } from '../data/content';
+---
+<Layout
+  title={`Therapie & Leistungen - ${site.shortName} | Physiotherapie & Osteopathie Nymphenburg`}
+  description="Krankengymnastik, Manuelle Therapie, KGG, Lymphdrainage, CMD, Osteopathie und mehr - das Behandlungsspektrum der Praxis Hartmut Meyer in München-Nymphenburg."
+  current="/therapie">
+
+  <PageHero
+    eyebrow="Therapie & Leistungen"
+    crumb="Therapie"
+    title="Die passende Therapie, am idealen Ort."
+    subtitle={therapieIntro}
+    image="/images/super9.jpg"
+    imageAlt="Manuelle Therapie an Schulter und Nacken"
+    primary={{ href: '/kontakt', label: 'Termin anfragen' }}
+  />
+
+  <!-- Säulen -->
+  <section class="bg-white sec-sm border-b border-line">
+    <div class="container-px">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {pillars.map((p, i) => (
+          <div class={`flex items-start gap-3.5 fade-in stagger-${(i % 4) + 1}`}>
+            <span class="icon-chip flex-shrink-0"><Icon name={p.icon} size={20} strokeWidth={1.8} /></span>
+            <div>
+              <h3 class="font-display text-ink text-[1.05rem] leading-tight">{p.name}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Modalitäten (verbatim) -->
+  <section class="bg-paper sec">
+    <div class="container-px">
+      <div class="max-w-2xl mb-12 fade-in">
+        <span class="eyebrow mb-5">Unser Spektrum</span>
+        <h2 class="display-2 text-balance">Was wir anbieten</h2>
+        <p class="lead mt-5 text-pretty">Jede Behandlung wird auf Ihre ärztliche Verordnung und Ihr Ziel abgestimmt - mit mindestens 25 bis 30 Minuten Zeit.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        {modalities.map((m, i) => (
+          <div class={`card flex gap-5 fade-in stagger-${(i % 2) + 1}`}>
+            <span class="icon-chip flex-shrink-0"><Icon name={m.icon} size={22} strokeWidth={1.8} /></span>
+            <div>
+              <div class="flex items-baseline gap-2.5 mb-2">
+                {m.abbr && <span class="pill pill-blue !py-0.5 !px-2.5 text-[0.72rem] font-semibold tracking-wide">{m.abbr}</span>}
+                <h3 class="h-md">{m.name}</h3>
+              </div>
+              <p class="text-[0.94rem] text-muted leading-relaxed text-pretty">{m.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-center text-muted mt-12 fade-in">
+        Neue Therapieformen oder Fragen? <a href="/kontakt" class="text-blue-ink font-medium underline underline-offset-2">Fragen Sie uns.</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

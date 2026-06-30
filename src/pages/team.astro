@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { team, site } from '../data/site';
+
+const founder = team.find((m) => m.name === 'Hartmut')!;
+const lead = team.find((m) => m.lead)!;
+const therapists = team.filter((m) => !['Hartmut', 'Dario'].includes(m.name) && !m.role.includes('Anmeldung'));
+const reception = team.filter((m) => m.role.includes('Anmeldung'));
+---
+<Layout
+  title={`Das Team - ${site.shortName} | Physiotherapie & Osteopathie Nymphenburg`}
+  description="Das Team der Praxis Hartmut Meyer in München-Nymphenburg: Physiotherapeut:innen, Osteopath:innen und Anmeldung. Rund um Gründer Hartmut Meyer und Leitung Dario Meyer."
+  current="/team">
+
+  <PageHero
+    eyebrow="Wir sind Ihr Team"
+    title="Die Menschen hinter der <em>Praxis</em>"
+    crumb="Das Team"
+    subtitle="Ein großes, gemischtes Team aus ganz Europa und darüber hinaus - vom Empfang bis zur Behandlung."
+    image="/images/team-gruppe.jpg"
+    imageAlt="Das Team der Physiotherapie Hartmut Meyer"
+  />
+
+  <!-- Gründer + Leitung -->
+  <section class="bg-paper sec border-b border-line">
+    <div class="container-px">
+      <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {[founder, lead].map((m, i) => (
+          <div class={`card-flush flex flex-col sm:flex-row gap-6 p-6 fade-in stagger-${i + 1}`}>
+            <div class="sm:w-44 flex-shrink-0">
+              <div class="rounded-2xl overflow-hidden aspect-[4/5] bg-sand"><img src={m.photo} alt={m.name} width="220" height="275" loading="lazy" class="w-full h-full object-cover" /></div>
+            </div>
+            <div class="flex flex-col">
+              <span class="eyebrow eyebrow-plain mb-2">{m.name === 'Hartmut' ? 'Gründer' : 'Praxisleitung'}</span>
+              <h2 class="h-lg">{m.name}</h2>
+              <p class="text-blue-deep font-medium text-[0.95rem] mt-1 mb-4">{m.role}</p>
+              <div class="flex flex-wrap gap-1.5">
+                {m.quals?.map((q) => <span class="pill !py-1 !px-2.5 text-[0.78rem]">{q}</span>)}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Therapeut:innen -->
+  <section class="bg-white sec border-b border-line">
+    <div class="container-px">
+      <h2 class="h-xl mb-10 fade-in">Therapeutinnen & Therapeuten</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        {therapists.map((m, i) => (
+          <div class={`card-flush flex flex-col fade-in stagger-${(i % 4) + 1}`}>
+            <div class="aspect-[4/5] overflow-hidden bg-sand"><img src={m.photo} alt={m.name} width="240" height="300" loading="lazy" class="w-full h-full object-cover" /></div>
+            <div class="p-4 flex flex-col flex-1">
+              <p class="font-display text-ink text-[1.1rem] leading-tight">{m.name}</p>
+              <p class="text-blue-deep text-[0.82rem] mt-1 leading-snug">{m.role}</p>
+              {m.quals && <p class="text-muted-light text-[0.78rem] mt-2 leading-snug">{m.quals.join(' · ')}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Anmeldung -->
+  <section class="bg-paper sec border-b border-line">
+    <div class="container-px">
+      <h2 class="h-xl mb-10 fade-in">Anmeldung & Verwaltung</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        {reception.map((m, i) => (
+          <div class={`card-flush flex flex-col fade-in stagger-${(i % 4) + 1}`}>
+            <div class="aspect-[4/5] overflow-hidden bg-sand"><img src={m.photo} alt={m.name} width="240" height="300" loading="lazy" class="w-full h-full object-cover" /></div>
+            <div class="p-4">
+              <p class="font-display text-ink text-[1.1rem] leading-tight">{m.name}</p>
+              <p class="text-muted-light text-[0.82rem] mt-1">{m.role}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruiting-Hinweis -->
+  <section class="bg-cream sec-sm">
+    <div class="container-px">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 fade-in">
+        <div class="flex items-start gap-4 max-w-2xl">
+          <span class="icon-chip flex-shrink-0"><Icon name="Users" size={22} strokeWidth={1.8} /></span>
+          <div>
+            <h2 class="h-md mb-1.5">Im Team Meyer arbeiten</h2>
+            <p class="text-muted text-[0.97rem] text-pretty">Wir suchen ständig Verstärkung - mit geregelten Sprechzeiten, geförderten Fortbildungen und Zeit für gute Therapie.</p>
+          </div>
+        </div>
+        <a href="/karriere" class="btn btn-blue flex-shrink-0">Zur Karriere<Icon name="ArrowRight" size={15} strokeWidth={2.2} /></a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

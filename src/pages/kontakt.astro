@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import MapBlock from '../components/MapBlock.astro';
+import { site, openings, telLink, mailLink, termineMail } from '../data/site';
+
+const tiles = [
+  { icon: 'Phone', label: 'Anrufen', value: site.phoneDisplay, href: telLink },
+  { icon: 'Mail', label: 'E-Mail', value: site.email, href: mailLink },
+  { icon: 'Instagram', label: 'Instagram', value: site.instagramHandle, href: site.instagram },
+];
+---
+<Layout
+  title={`Kontakt & Termin - ${site.shortName} | München-Nymphenburg`}
+  description="Termin anfragen bei Physiotherapie Hartmut Meyer in München-Nymphenburg. Wotanstraße 37-39, 80639 München. Telefon 089 / 178 27 73."
+  current="/kontakt">
+
+  <PageHero
+    eyebrow="Kontakt"
+    title="Vereinbaren Sie einen <em>Termin.</em>"
+    crumb="Kontakt"
+    subtitle="Am schnellsten erreichen Sie uns telefonisch. Schreiben Sie uns gern, wir nehmen uns Zeit für Ihr Anliegen."
+  />
+
+  <section class="bg-paper sec">
+    <div class="container-px">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <!-- Kontakt-Kacheln -->
+        <div class="lg:col-span-5 fade-in">
+          <div class="space-y-3.5">
+            {tiles.map((t) => (
+              <a href={t.href} target={t.icon === 'Instagram' ? '_blank' : undefined} rel={t.icon === 'Instagram' ? 'noopener' : undefined} class="card card-hover flex items-center gap-4">
+                <span class="icon-chip flex-shrink-0">
+                  {t.icon === 'Instagram'
+                    ? <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg>
+                    : <Icon name={t.icon} size={22} strokeWidth={1.8} />}
+                </span>
+                <span class="flex-1"><span class="block text-muted-light text-xs">{t.label}</span><span class="text-ink font-medium text-[1.05rem] break-all">{t.value}</span></span>
+                <Icon name="ArrowRight" size={18} strokeWidth={2} class="text-blue-deep flex-shrink-0" />
+              </a>
+            ))}
+          </div>
+
+          <div class="card mt-4">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="Clock" size={20} strokeWidth={2} class="text-blue-deep" />
+              <h2 class="h-md">Sprechzeiten</h2>
+            </div>
+            <dl class="space-y-2.5">
+              {openings.map((o) => (
+                <div class="flex items-baseline justify-between gap-4 text-[0.95rem]">
+                  <dt class="text-muted">{o.day}</dt>
+                  <dd class="text-ink font-medium text-right">{o.hours}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="text-muted-light text-sm mt-4 pt-4 border-t border-line">Termine nach Vereinbarung. Fax: {site.faxDisplay}</p>
+          </div>
+
+          <a href={termineMail} class="btn btn-blue btn-block mt-4"><Icon name="Send" size={16} strokeWidth={2} />Terminanfrage per E-Mail</a>
+        </div>
+
+        <!-- Adresse + Karte -->
+        <div class="lg:col-span-7 fade-in stagger-1">
+          <div class="flex items-start gap-3.5 mb-5">
+            <span class="icon-chip flex-shrink-0"><Icon name="MapPin" size={22} strokeWidth={1.8} /></span>
+            <div>
+              <p class="font-display text-ink text-xl leading-tight">{site.shortName}</p>
+              <p class="text-muted mt-1">{site.street}, {site.postcode} {site.city} · {site.district}</p>
+              <a href={site.mapsUrl} target="_blank" rel="noopener" class="arrow-link mt-2 text-[0.9rem]">In Google Maps öffnen<Icon name="ArrowUpRight" size={15} strokeWidth={2.2} /></a>
+            </div>
+          </div>
+          <MapBlock class="aspect-[4/3] lg:aspect-[16/10]" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

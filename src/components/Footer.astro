@@ -1,0 +1,82 @@
+---
+import { site, footerNav, legalNav, mailLink, telLink } from '../data/site';
+import Icon from './Icon.astro';
+const year = 2026;
+---
+<footer class="section-dark on-dark relative overflow-hidden" role="contentinfo">
+  <!-- Markenmotiv Morphofalter - sehr dezent, eine Ecke -->
+  <img src="/images/schmetterling.png" alt="" aria-hidden="true" loading="lazy"
+       class="pointer-events-none select-none absolute -right-10 -top-10 w-64 opacity-[0.06] rotate-12" />
+  <div class="container-px relative pt-16 md:pt-20 pb-24 lg:pb-12">
+    <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 pb-12 border-b border-white/10">
+      <!-- Brand: Original-Logo 1:1 auf hellem Chip (Logo ist fuer hellen Grund gebaut) -->
+      <div class="lg:col-span-4">
+        <a href="/" aria-label={`${site.name} - Startseite`} class="inline-flex bg-white rounded-2xl px-4 py-3 shadow-lg">
+          <img src="/logo.png" alt="Physiotherapie & Osteopathie Hartmut Meyer - München-Nymphenburg" width="220" height="38" class="h-9 w-auto" loading="lazy" />
+        </a>
+        <p class="text-white/60 text-[0.95rem] leading-relaxed mt-6 max-w-xs text-pretty">
+          Physiotherapie, Osteopathie und Training in München-Nymphenburg. Persönlich
+          geführt seit 1990, in der Wotanstraße - mit Zeit für jede Behandlung.
+        </p>
+        <a href="/karriere" class="inline-flex items-center gap-2 mt-7 text-[0.92rem] font-medium text-white/85 hover:text-white transition group">
+          <Icon name="Users" size={16} strokeWidth={2} class="text-blue-bright" />
+          Im Team Meyer arbeiten
+          <Icon name="ArrowRight" size={15} strokeWidth={2.2} class="transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+
+      <!-- Praxis -->
+      <div class="lg:col-span-2">
+        <h3 class="text-white text-[0.74rem] font-semibold uppercase tracking-[0.16em] mb-5">Praxis</h3>
+        <ul class="space-y-2.5 text-[0.92rem]">
+          {footerNav.praxis.map((l) => (<li><a href={l.href} class="text-white/60 hover:text-white transition">{l.label}</a></li>))}
+        </ul>
+      </div>
+
+      <!-- Therapie & Training -->
+      <div class="lg:col-span-3">
+        <h3 class="text-white text-[0.74rem] font-semibold uppercase tracking-[0.16em] mb-5">Therapie & Training</h3>
+        <ul class="space-y-2.5 text-[0.92rem]">
+          {footerNav.leistungen.map((l) => (<li><a href={l.href} class="text-white/60 hover:text-white transition">{l.label}</a></li>))}
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div class="lg:col-span-3">
+        <h3 class="text-white text-[0.74rem] font-semibold uppercase tracking-[0.16em] mb-5">Kontakt</h3>
+        <ul class="space-y-3.5 text-[0.92rem] text-white/60">
+          <li>
+            <p class="text-white/85 font-medium mb-0.5">{site.shortName}</p>
+            <p>{site.street}, {site.postcode} {site.city}</p>
+          </li>
+          <li>
+            <a href={telLink} class="inline-flex items-center gap-2 hover:text-white transition">
+              <Icon name="Phone" size={14} strokeWidth={2} class="text-blue-bright" />{site.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a href={mailLink} class="inline-flex items-center gap-2 hover:text-white transition break-all">
+              <Icon name="Mail" size={14} strokeWidth={2} class="text-blue-bright" />{site.email}
+            </a>
+          </li>
+          <li>
+            <a href={site.instagram} target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-white transition" aria-label="Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-bright" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg>
+              Instagram
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Legal bar -->
+    <div class="pt-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <p class="text-white/55 text-[0.82rem] text-pretty">
+        © {year} {site.name} · {site.street}, {site.postcode} {site.city}
+      </p>
+      <div class="flex items-center gap-5 text-[0.85rem]">
+        {legalNav.map((l) => (<a href={l.href} class="text-white/60 hover:text-white transition">{l.label}</a>))}
+      </div>
+    </div>
+  </div>
+</footer>

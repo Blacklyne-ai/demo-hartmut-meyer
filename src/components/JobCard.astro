@@ -1,0 +1,58 @@
+---
+// Wiederverwendbare Jobanzeige. Struktur: Titel · Aufgaben · Profil · Bewerbung.
+// Placeholder-Stellen tragen einen ehrlichen Hinweis, dass der Inhaber die
+// konkreten Details (Umfang, Gehalt) noch ergänzt - nichts erfunden.
+import Icon from './Icon.astro';
+import { careerMail, telLink, site } from '../data/site';
+import type { JobPosting } from '../data/content';
+interface Props { job: JobPosting }
+const { job } = Astro.props;
+const applyMail = `mailto:${site.email}?subject=${encodeURIComponent('Bewerbung: ' + job.title)}`;
+---
+<article class="card-flush p-7 md:p-9">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-2">
+    <div>
+      <h3 class="h-lg">{job.title}</h3>
+      <p class="text-muted-light text-[0.92rem] mt-1.5 inline-flex items-center gap-2">
+        <Icon name="Clock" size={15} strokeWidth={2} class="text-blue-deep" />{job.type}
+      </p>
+    </div>
+    <span class="icon-chip flex-shrink-0"><Icon name="Users" size={22} strokeWidth={1.8} /></span>
+  </div>
+  <p class="text-[1.02rem] leading-relaxed text-pretty mt-4">{job.summary}</p>
+
+  <div class="grid sm:grid-cols-2 gap-x-10 gap-y-7 mt-8">
+    <div>
+      <h4 class="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-blue-deep mb-3.5">Ihre Aufgaben</h4>
+      <ul class="space-y-2.5">
+        {job.tasks.map((t) => (
+          <li class="flex items-start gap-2.5 text-[0.96rem] text-muted leading-snug">
+            <Icon name="Check" size={17} strokeWidth={2.4} class="text-blue-deep flex-shrink-0 mt-0.5" />{t}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-blue-deep mb-3.5">Das bringen Sie mit</h4>
+      <ul class="space-y-2.5">
+        {job.profile.map((p) => (
+          <li class="flex items-start gap-2.5 text-[0.96rem] text-muted leading-snug">
+            <Icon name="Check" size={17} strokeWidth={2.4} class="text-blue-deep flex-shrink-0 mt-0.5" />{p}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  {job.placeholder && (
+    <p class="mt-7 text-[0.86rem] text-muted-light bg-cream rounded-xl px-4 py-3 inline-flex items-start gap-2.5">
+      <Icon name="Info" size={16} strokeWidth={2} class="text-blue-deep flex-shrink-0 mt-0.5" />
+      Umfang, Eintrittstermin und weitere Details stimmen wir gerne persönlich mit Ihnen ab - schreiben Sie uns einfach.
+    </p>
+  )}
+
+  <div class="flex flex-col sm:flex-row gap-3 mt-7 pt-7 border-t border-line">
+    <a href={applyMail} class="btn btn-blue"><Icon name="Send" size={16} strokeWidth={2} />Per E-Mail bewerben</a>
+    <a href={telLink} class="btn btn-outline"><Icon name="Phone" size={16} strokeWidth={2} />{site.phoneDisplay}</a>
+  </div>
+</article>

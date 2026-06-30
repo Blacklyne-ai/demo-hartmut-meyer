@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { galerieRaeume } from '../data/content';
+---
+<Layout
+  title={`Galerie Therapieräume - ${site.shortName} | München-Nymphenburg`}
+  description="Einblick in die fünf individuellen Therapieräume der Praxis Hartmut Meyer in München-Nymphenburg - für Osteopathie, Krankengymnastik und Manuelle Therapie."
+  current="/galerie-therapieraeume">
+
+  <PageHero
+    eyebrow="Galerie Räume"
+    crumb="Galerie Räume"
+    title="Fünf individuelle <em>Therapieräume.</em>"
+    subtitle={galerieRaeume.lead}
+    secondary={{ href: '/galerie-training', label: 'Zur Galerie Training' }}
+  />
+
+  <section class="bg-paper sec">
+    <div class="container-px">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [&>*]:mb-4">
+        {galerieRaeume.images.map((img, i) => (
+          <div class={`photo-frame-soft overflow-hidden fade-in stagger-${(i % 4) + 1}`} style="border-radius: var(--radius-lg);">
+            <img src={img.src} alt={img.alt} loading="lazy" class="w-full h-auto" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

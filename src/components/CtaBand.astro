@@ -1,0 +1,24 @@
+---
+// Finales CTA-Band (Dark, ruhig). Footer ist info-only - keine doppelten CTAs.
+import Icon from './Icon.astro';
+import { site, telLink } from '../data/site';
+interface Props { title?: string; text?: string }
+const {
+  title = 'Ihre Therapie in <em>Nymphenburg.</em>',
+  text = 'Ob erster Termin oder eine Frage vorab - rufen Sie uns an oder schreiben Sie uns. Wir nehmen uns gerne Zeit für Sie.',
+} = Astro.props;
+---
+<section class="section-dark on-dark sec relative overflow-hidden">
+  <div class="absolute -right-24 -top-24 w-[26rem] h-[26rem] rounded-full opacity-[0.14] pointer-events-none" style="background: radial-gradient(circle, rgb(var(--rgb-blue-bright)) 0%, transparent 70%);" aria-hidden="true"></div>
+  <div class="container-px relative">
+    <div class="max-w-3xl fade-in">
+      <span class="eyebrow eyebrow-light mb-6">Termin anfragen</span>
+      <h2 class="display-2 text-white text-balance mb-5" set:html={title} />
+      <p class="text-lg md:text-xl text-white/75 leading-relaxed mb-9 max-w-2xl text-pretty">{text}</p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <a href="/kontakt" class="btn btn-light btn-lg">Termin anfragen<Icon name="ArrowRight" size={17} strokeWidth={2.2} /></a>
+        <a href={telLink} class="btn btn-ghost btn-lg"><Icon name="Phone" size={17} strokeWidth={2.2} />{site.phoneDisplay}</a>
+      </div>
+    </div>
+  </div>
+</section>
